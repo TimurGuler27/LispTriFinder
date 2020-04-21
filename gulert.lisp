@@ -4,23 +4,19 @@
 ;these triangles
 
 ;test case
-(setf test '((1 2)(2 3)(1 3)(2 4)(3 4)(4 5)(3 5)))
-(setf g2'((1 2) (2 3) (1 3) (2 4)(3 4) (4 5) (3 5)(4 6) (3 7) (7 8) (3 8) (5 8) (7 9)))
-     
+
 (defun countVertexTriangles (set numVert);function definition
  
     (setf firstList (loop :for (x y) :in set :collect (list x)));seperate the lists into individual lists
     (setf secondList (loop :for (x y) :in set :collect (list y)))
     (setf combinedList (append firstList secondList));combine those lists together for easy data access
     (setf retList (make-list numVert :initial-element '0));makes the return list with the size of numVert
-
-    
     
      (setf cListLen (- (length combinedList) 1));subtract 1 in order for proper indexing
      (setf rListLen (- (length retList) 1))
-    
+ (print combinedList)
     (loop for x from 0 to rListLen do;loop through the list that will be returned
-          (setf newRound -1);allow for adequete counting
+          (setf newRound -1);accounts for the fact that the number of triangles the vertex is in is the amount in combinedList-1
     (loop for y from 0 to cListLen do;loop through the list of verticies
           (setf cListIndex (elt combinedList y));get the index of the list of verticies
           (setf newX (+ x 1));the reason you do this is because retList[0]
@@ -29,9 +25,10 @@
           ;to compare it to what we are trying to find
           (if (equal cListIndex (list newX));if we find a match in indexes
               (setf newRound (+ newRound 1));we add 1 to that index in retList
-              (setf (nth x retList) newRound);update the value of the number of triangles vertex x occupies  
           )
+          (setf (nth x retList) newRound);update the value of the number of triangles vertex x occupies  
      ))
     (print retList);print out the array
+
 )
 
